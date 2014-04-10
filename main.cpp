@@ -26,45 +26,41 @@ const uword_t Amask         = (MEM_WORDS - 1) << 2*ADDRESS_WIDTH;
 const uword_t Bmask         = (MEM_WORDS - 1) << 1*ADDRESS_WIDTH;
 const uword_t Jmask         = (MEM_WORDS - 1) << 0*ADDRESS_WIDTH;
 
-uword_t   mem[MEM_WORDS];
-
-ifstream f;
-
 int main(int argc, char* argv[]) {
   if (argc != 2) {
     fprintf(stderr, "Usage mode: subleq <mem_init_file>\n");
     return 0;
   }
   
-  void read();
-  void run();
+  uword_t mem[MEM_WORDS];
   
-  f.open(argv[1]);
-  read();
+  // read
+  ifstream f(argv[1]);
+  for (address_t words = 0, end = 0; !end; ++words) {
+    // skip address
+    while (f.get() != ':');
+    f.get();
+    
+    // read data
+    {
+      string tmp;
+      for (char c = f.get(); c != ';'; c = f.get())
+        tmp += c;
+      sscanf(tmp.c_str(), "%llx", mem + words);
+    }
+    
+    // skip line
+    while (f.get() != '\n');
+    
+    // check end
+    {
+      char tmp = f.get();
+      end = tmp == '\r' || tmp == '\n';
+    }
+  }
   f.close();
   
-  //run();
-  
-  return 0;
-}
-
-void read() {
-  void skipLines(int);
-  bool end();
-  void skipAddress();
-  
-  skipLines(7);
-  for (address_t words = 0; !end(); ++words) {
-    skipAddress();
-    string tmp;
-    for (char c = f.get(); c != ';'; c = f.get())
-      tmp += c;
-    sscanf(tmp.c_str(), "%llx", mem + words);
-    skipLines(1);
-  }
-}
-
-void run() {
+  // run
   uword_t instruction;
   address_t Aaddr, Baddr, Jaddr;
   word_t sub;
@@ -76,19 +72,6 @@ void run() {
     sub = mem[Baddr] - mem[Aaddr];
     mem[Baddr] = sub;
   }
-}
-
-void skipLines(int lines) {
-  for (int i = 0; i < lines; ++i)
-    while (f.get() != '\n');
-}
-
-bool end() {
-  char tmp = f.get();
-  return tmp == '\r' || tmp == '\n';
-}
-
-void skipAddress() {
-  while (f.get() != ':');
-  f.get();
+  
+  return 0;
 }
