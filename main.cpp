@@ -34,14 +34,14 @@ int main(int argc, char* argv[]) {
   
   uword_t mem[MEM_WORDS];
   
-  // read
+  // read data
   ifstream f(argv[1]);
   for (address_t words = 0, end = 0; !end; ++words) {
     // skip address
     while (f.get() != ':');
     f.get();
     
-    // read data
+    // read word
     {
       string tmp;
       for (char c = f.get(); c != ';'; c = f.get())
