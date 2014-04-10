@@ -66,9 +66,9 @@ int main(int argc, char* argv[]) {
   word_t sub;
   for (address_t ip = 0; ip < MEM_WORDS; ip = sub <= 0 ? Jaddr : ip + 1) {
     instruction = mem[ip];
-    Aaddr = instruction & A_MASK;
-    Baddr = instruction & B_MASK;
-    Jaddr = instruction & J_MASK;
+    Aaddr = (instruction & A_MASK) >> 2*ADDRESS_WIDTH;
+    Baddr = (instruction & B_MASK) >> 1*ADDRESS_WIDTH;
+    Jaddr = (instruction & J_MASK) >> 0*ADDRESS_WIDTH;
     sub = mem[Baddr] - mem[Aaddr];
     mem[Baddr] = sub;
   }
