@@ -1,7 +1,7 @@
 virtual-machine
 ===============
 
-C++ program to read memory initialization file (.mif) and run the subleq program.
+C++ program to read a memory initialization file (.mif) with a subleq program inside and run it.
 
 ```
 To compile: make
