@@ -22,9 +22,9 @@ typedef uint32_t address_t;
 #endif
 
 const uword_t ADDRESS_WIDTH = log2(MEM_WORDS);
-const uword_t Amask         = (MEM_WORDS - 1) << 2*ADDRESS_WIDTH;
-const uword_t Bmask         = (MEM_WORDS - 1) << 1*ADDRESS_WIDTH;
-const uword_t Jmask         = (MEM_WORDS - 1) << 0*ADDRESS_WIDTH;
+const uword_t A_MASK        = (MEM_WORDS - 1) << 2*ADDRESS_WIDTH;
+const uword_t B_MASK        = (MEM_WORDS - 1) << 1*ADDRESS_WIDTH;
+const uword_t J_MASK        = (MEM_WORDS - 1) << 0*ADDRESS_WIDTH;
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {
@@ -66,9 +66,9 @@ int main(int argc, char* argv[]) {
   word_t sub;
   for (address_t ip = 0; ip < MEM_WORDS; ip = sub <= 0 ? Jaddr : ip + 1) {
     instruction = mem[ip];
-    Aaddr = instruction & Amask;
-    Baddr = instruction & Bmask;
-    Jaddr = instruction & Jmask;
+    Aaddr = instruction & A_MASK;
+    Baddr = instruction & B_MASK;
+    Jaddr = instruction & J_MASK;
     sub = mem[Baddr] - mem[Aaddr];
     mem[Baddr] = sub;
   }
