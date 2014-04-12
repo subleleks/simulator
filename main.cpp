@@ -15,7 +15,7 @@ using namespace std;
 
 typedef int64_t  word_t;
 typedef uint64_t uword_t;
-typedef uint32_t address_t;
+typedef int32_t  address_t;
 
 #ifndef MEM_WORDS
 #define MEM_WORDS 8192
