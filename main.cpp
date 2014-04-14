@@ -28,7 +28,7 @@ const uword_t J_MASK        = ((uword_t)(MEM_WORDS - 1)) << 0*ADDRESS_WIDTH;
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {
-    fprintf(stderr, "Usage mode: subleq <mem_init_file>\n");
+    fprintf(stderr, "Usage mode: subleq-vm <mem_init_file>\n");
     return 0;
   }
   
