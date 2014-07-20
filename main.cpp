@@ -34,27 +34,19 @@ int main(int argc, char* argv[]) {
   
   // read data
   ifstream f(argv[1]);
-  for (address_t words = 0, end = 0; !end; ++words) {
+  for (address_t words = 0; !f.eof(); ++words) {
+    string tmp;
+    
     // skip address
+    f >> tmp;
     while (f.get() != ':');
     f.get();
     
     // read word
-    {
-      string tmp;
-      for (char c = f.get(); c != ';'; c = f.get())
-        tmp += c;
-      sscanf(tmp.c_str(), "%llx", mem + words);
-    }
-    
-    // skip line
-    while (f.get() != '\n');
-    
-    // check end
-    {
-      char tmp = f.get();
-      end = tmp == '\r' || tmp == '\n';
-    }
+    tmp = "";
+    for (char c = f.get(); c != ';'; c = f.get())
+      tmp += c;
+    sscanf(tmp.c_str(), "%llx", &mem[words]);
   }
   f.close();
   
