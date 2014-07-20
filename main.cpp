@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
     return 0;
   }
   
-  uword_t mem[MEM_WORDS];
+  uword_t* mem = new uword_t[MEM_WORDS];
   
   // read data
   ifstream f(argv[1]);
@@ -70,6 +70,8 @@ int main(int argc, char* argv[]) {
     sub = mem[Baddr] - mem[Aaddr];
     mem[Baddr] = sub;
   }
+  
+  delete[] mem;
   
   return 0;
 }
