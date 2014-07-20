@@ -18,13 +18,11 @@ typedef uint64_t uword_t;
 typedef int32_t  address_t;
 
 #ifndef MEM_WORDS
-#define MEM_WORDS 8192
+#define MEM_WORDS 0x2000
 #endif
 
-const uword_t ADDRESS_WIDTH = log2(MEM_WORDS);
-const uword_t A_MASK        = ((uword_t)(MEM_WORDS - 1)) << 2*ADDRESS_WIDTH;
-const uword_t B_MASK        = ((uword_t)(MEM_WORDS - 1)) << 1*ADDRESS_WIDTH;
-const uword_t J_MASK        = ((uword_t)(MEM_WORDS - 1)) << 0*ADDRESS_WIDTH;
+const uword_t ADDRESS_WIDTH = uword_t(log2(double(MEM_WORDS)));
+const uword_t ADDRESS_MASK  = uword_t(MEM_WORDS - 1);
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {
@@ -64,13 +62,13 @@ int main(int argc, char* argv[]) {
   uword_t instruction;
   address_t Aaddr, Baddr, Jaddr;
   word_t sub;
-  for (address_t ip = 0; ip < MEM_WORDS; ip = sub <= 0 ? Jaddr + ip : ip + 1) {
+  for (address_t ip = 0; ip < MEM_WORDS; ip = sub <= 0 ? Jaddr : ip + 1) {
     instruction = mem[ip];
-    Aaddr = (instruction & A_MASK) >> 2*ADDRESS_WIDTH;
-    Baddr = (instruction & B_MASK) >> 1*ADDRESS_WIDTH;
-    Jaddr = (instruction & J_MASK) >> 0*ADDRESS_WIDTH;
-    sub = mem[Baddr + ip] - mem[Aaddr + ip];
-    mem[Baddr + ip] = sub;
+    Aaddr = (instruction >> 2*ADDRESS_WIDTH) & ADDRESS_MASK;
+    Baddr = (instruction >> 1*ADDRESS_WIDTH) & ADDRESS_MASK;
+    Jaddr = (instruction >> 0*ADDRESS_WIDTH) & ADDRESS_MASK;
+    sub = mem[Baddr] - mem[Aaddr];
+    mem[Baddr] = sub;
   }
   
   return 0;
