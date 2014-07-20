@@ -15,7 +15,7 @@ using namespace std;
 
 typedef int64_t  word_t;
 typedef uint64_t uword_t;
-typedef uint32_t  address_t;
+typedef uint32_t address_t;
 
 #ifndef MEM_WORDS
 #define MEM_WORDS 0x2000
@@ -26,7 +26,7 @@ const uword_t ADDRESS_MASK  = uword_t(MEM_WORDS - 1);
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {
-    fprintf(stderr, "Usage mode: subleq-sim <mem_init_file>\n");
+    fprintf(stderr, "Usage mode: subleq-sim <meminit_file>\n");
     return 0;
   }
   
