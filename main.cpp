@@ -34,11 +34,14 @@ int main(int argc, char* argv[]) {
   
   // read data
   ifstream f(argv[1]);
-  for (address_t words = 0; !f.eof(); ++words) {
+  for (address_t words = 0; ; ++words) {
     string tmp;
     
     // skip address
     f >> tmp;
+    if (tmp == "END;") {
+      break;
+    }
     while (f.get() != ':');
     f.get();
     
