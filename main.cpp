@@ -57,6 +57,7 @@ int main(int argc, char* argv[]) {
   uword_t instruction;
   address_t Aaddr, Baddr, Jaddr;
   word_t sub;
+  uword_t instructions = 0;
   for (address_t ip = 0; ; ip = sub <= 0 ? Jaddr : ip + 1) {
     instruction = mem[ip];
     if (0 > (word_t)instruction) {
@@ -69,7 +70,9 @@ int main(int argc, char* argv[]) {
     printf("0x%08X: A=0x%08X(0x%016llX) B=0x%08X(0x%016llX) J=0x%08X sub=0x%016llX\n", ip, Aaddr, mem[Aaddr], Baddr, mem[Baddr], Jaddr, sub);
     fflush(stdout);
     mem[Baddr] = sub;
+    instructions++;
   }
+  printf("Instructions executed: %lld\n", instructions);
   
   delete[] mem;
   
