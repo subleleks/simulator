@@ -57,13 +57,20 @@ int main(int argc, char* argv[]) {
   uword_t instruction;
   address_t Aaddr, Baddr, Jaddr;
   word_t sub;
-  for (address_t ip = 0; ip < MEM_WORDS; ip = sub <= 0 ? Jaddr : ip + 1) {
+  for (address_t ip = 0; ; ip = sub <= 0 ? Jaddr : ip + 1) {
     instruction = mem[ip];
+    if (0 > (word_t)instruction) {
+      printf("%d\n", ip);
+      getchar();
+      break;
+    }
     Aaddr = (instruction >> 2*ADDRESS_WIDTH) & ADDRESS_MASK;
     Baddr = (instruction >> 1*ADDRESS_WIDTH) & ADDRESS_MASK;
     Jaddr = (instruction >> 0*ADDRESS_WIDTH) & ADDRESS_MASK;
     sub = mem[Baddr] - mem[Aaddr];
     mem[Baddr] = sub;
+    printf("0x%08X: A=0x%08X(0x%016llX) B=0x%08X(0x%016llX) J=0x%08X sub=0x%016llX\n", ip, Aaddr, mem[Aaddr], Baddr, mem[Baddr], Jaddr, sub);
+    fflush(stdout);
   }
   
   delete[] mem;
