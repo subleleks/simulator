@@ -60,8 +60,6 @@ int main(int argc, char* argv[]) {
   for (address_t ip = 0; ; ip = sub <= 0 ? Jaddr : ip + 1) {
     instruction = mem[ip];
     if (0 > (word_t)instruction) {
-      printf("%d\n", ip);
-      getchar();
       break;
     }
     Aaddr = (instruction >> 2*ADDRESS_WIDTH) & ADDRESS_MASK;
