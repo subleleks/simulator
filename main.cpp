@@ -68,7 +68,6 @@ int main(int argc, char* argv[]) {
     Jaddr = (instruction >> 0*ADDRESS_WIDTH) & ADDRESS_MASK;
     sub = mem[Baddr] - mem[Aaddr];
     printf("0x%08X: A=0x%08X(0x%016llX) B=0x%08X(0x%016llX) J=0x%08X sub=0x%016llX\n", ip, Aaddr, mem[Aaddr], Baddr, mem[Baddr], Jaddr, sub);
-    fflush(stdout);
     mem[Baddr] = sub;
     instructions++;
   }
