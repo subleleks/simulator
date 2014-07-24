@@ -49,7 +49,7 @@ int simulator32(int argc, char* argv[]) {
   f.close();
   
   // run
-  uword_t Aaddr, A, B, J;
+  uword_t A, B, J;
   word_t sub;
   uint64_t instructions = 0;
   for (uword_t ip = 0; ; ip = sub <= 0 ? J : ip) {
