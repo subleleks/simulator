@@ -61,7 +61,7 @@ int simulator32(int argc, char* argv[]) {
     B = mem[ip++];
     J = mem[ip++];
     sub = mem[B] - mem[A];
-    printf("0x%08X: A=0x%08X(0x%08X) B=0x%08X(0x%08X) J=0x%08X sub=0x%08X\n", ip, A, mem[A], B, mem[B], J, sub);
+    printf("0x%08X: A=0x%08X(0x%08X) B=0x%08X(0x%08X) J=0x%08X sub=0x%08X\n", ip - 3, A, mem[A], B, mem[B], J, sub);
     mem[B] = sub;
     instructions++;
   }
