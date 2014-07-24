@@ -21,8 +21,8 @@ typedef uint32_t address_t;
 #define MEM_WORDS 0x2000
 #endif
 
-const uword_t ADDRESS_WIDTH = uword_t(log2(double(MEM_WORDS)));
-const uword_t ADDRESS_MASK  = uword_t(MEM_WORDS - 1);
+static const uword_t ADDRESS_WIDTH = uword_t(log2(double(MEM_WORDS)));
+static const uword_t ADDRESS_MASK  = uword_t(MEM_WORDS - 1);
 
 int simulator64(int argc, char* argv[]) {
   if (argc != 2) {
